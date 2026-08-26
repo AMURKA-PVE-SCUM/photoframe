@@ -1,0 +1,89 @@
+<Window x:Class="PhotoFrame.UI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="PhotoFrame"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ShowInTaskbar="False"
+        Topmost="True"
+        ResizeMode="CanResizeWithGrip"
+        MinWidth="100"
+        MinHeight="100"
+        Loaded="Window_Loaded"
+        Closing="Window_Closing"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown"
+        MouseRightButtonUp="Window_MouseRightButtonUp"
+        SizeChanged="Window_SizeChanged"
+        LocationChanged="Window_LocationChanged">
+
+    <Grid x:Name="RootGrid">
+        <!-- Rectangle/Rounded mode -->
+        <Border x:Name="RectFrame"
+                BorderThickness="10"
+                BorderBrush="#8B5A2B"
+                CornerRadius="4"
+                Background="#1A1A1A"
+                MouseRightButtonUp="Window_MouseRightButtonUp">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="16" ShadowDepth="6" Opacity="0.5"
+                                  Color="Black" Direction="315"/>
+            </Border.Effect>
+
+            <Grid ClipToBounds="True">
+                <Image x:Name="PhotoImage"
+                       Stretch="Uniform"
+                       RenderOptions.BitmapScalingMode="HighQuality"/>
+
+                <TextBlock x:Name="NoPhotosText"
+                           Text="Фото не найдены&#x0a;Нажмите правую кнопку для выбора папки"
+                           Foreground="#80FFFFFF"
+                           FontSize="14"
+                           TextAlignment="Center"
+                           VerticalAlignment="Center"
+                           Visibility="Collapsed"/>
+
+                <TextBlock x:Name="CounterText"
+                           Foreground="#99FFFFFF"
+                           FontSize="10"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Bottom"
+                           Margin="0,0,6,4"
+                           Visibility="Collapsed"/>
+            </Grid>
+        </Border>
+
+        <!-- Circle mode (hidden by default) -->
+        <Canvas x:Name="CircleFrame"
+                Visibility="Collapsed"
+                Background="Transparent"
+                MouseRightButtonUp="Window_MouseRightButtonUp">
+            <Canvas.Effect>
+                <DropShadowEffect BlurRadius="16" ShadowDepth="6" Opacity="0.5"
+                                  Color="Black" Direction="315"/>
+            </Canvas.Effect>
+
+            <!-- Outer ring = the frame color -->
+            <Ellipse x:Name="CircleRing"/>
+
+            <!-- Photo area = clipped border inside the ring -->
+            <Border x:Name="CirclePhotoBorder"
+                    Background="#1A1A1A"
+                    ClipToBounds="True">
+                <Grid ClipToBounds="True">
+                    <Image x:Name="CirclePhotoImage"
+                           Stretch="UniformToFill"
+                           RenderOptions.BitmapScalingMode="HighQuality"/>
+                </Grid>
+            </Border>
+
+            <!-- "No photos" text -->
+            <TextBlock x:Name="CircleNoPhotosText"
+                       Text="Фото не найдены&#x0a;ПКМ для выбора папки"
+                       Foreground="#80FFFFFF"
+                       FontSize="12"
+                       TextAlignment="Center"
+                       Visibility="Collapsed"/>
+        </Canvas>
+    </Grid>
+</Window>
